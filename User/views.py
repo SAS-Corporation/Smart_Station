@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from User import serializers as user_serializers
 from User import models as user_models
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.contrib.auth import logout
 
 
 
@@ -53,3 +54,15 @@ class LoginView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
      
+
+# View to handle user logout.
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        # Log out the user and clear the session
+        logout(request)
+        return Response({
+            "message": "Logout successful."
+        }, status=status.HTTP_200_OK)
+
