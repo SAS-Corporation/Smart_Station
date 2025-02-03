@@ -12,8 +12,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import environ
-import os
 import pymysql
+import os
+
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Initialize pymysql as MySQLdb
 pymysql.install_as_MySQLdb()
@@ -168,7 +172,8 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+env = environ.Env()
+environ.Env.read_env()
 # Email settings
 EMAIL_BACKEND = env("EMAIL_BACKEND")
 EMAIL_HOST = env("EMAIL_HOST")
